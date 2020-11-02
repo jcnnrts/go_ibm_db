@@ -20,25 +20,24 @@ type DBP struct {
 
 //Pool struct contais the about the pool like size, used and available connections
 type Pool struct {
-	availablePool map[string][]*DBP
-	usedPool      map[string][]*DBP
-	poolSize      int
-	mu            sync.Mutex
+	availablePool	map[string][]*DBP
+	usedPool		map[string][]*DBP
+	maxPoolSize		int
+	curPoolSize		int
+	mu				sync.Mutex
 }
 
 //Pconnect will return the pool instance
 func Pconnect(poolSize int) *Pool {
 	p := &Pool{
-		availablePool: make(map[string][]*DBP),
-		usedPool:      make(map[string][]*DBP),
-		poolSize:      poolSize,
+		availablePool:	make(map[string][]*DBP),
+		usedPool:		make(map[string][]*DBP),
+		maxPoolSize:	poolSize,
+		curPoolSize:	0
 	}
 
 	return p
 }
-
-//Psize sets the size of the pool idf value is passed
-var Psize int
 
 //Open will check for the connection in the pool
 //If not opens a new connection and stores in the pool
@@ -63,8 +62,8 @@ func (p *Pool) Open(Connstr string, options ...string) *DBP {
 		time = 30 * Time.Second
 	}
 
-	if Psize < p.poolSize {
-		Psize = Psize + 1
+	if p.curPoolSize < p.maxPoolSize {
+		p.curPoolSize++
 
 		if val, ok := p.availablePool[Connstr]; ok {
 			if len(val) > 1 {
@@ -123,9 +122,11 @@ func (d *DBP) Close() {
 	d.pool.mu.Lock()
 	defer d.pool.mu.Unlock()
 
-	Psize = Psize - 1
+	d.pool.curPoolSize--
+
 	var pos int
 	i := -1
+
 	if valc, okc := d.pool.usedPool[d.con]; okc {
 		if len(valc) > 1 {
 			for _, b := range valc {
