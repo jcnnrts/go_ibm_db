@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	a "github.com/ibmdb/go_ibm_db"
+	a "github.com/jcnnrts/go_ibm_db"
 )
 
 var con = "PROTOCOL=tcpip;HOSTNAME=localhost;PORT=50000;DATABASE=go;UID=uname;PWD=pwd"

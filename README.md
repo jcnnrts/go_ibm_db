@@ -4,7 +4,7 @@ Interface for GoLang to DB2 for z/OS, DB2 for LUW, DB2 for i.
 
 ## API Documentation
 
-> For complete list of go_ibm_db APIs and examples please check [APIDocumentation.md](https://github.com/ibmdb/go_ibm_db/blob/master/API_DOCUMENTATION.md)
+> For complete list of go_ibm_db APIs and examples please check [APIDocumentation.md](https://github.com/jcnnrts/go_ibm_db/blob/master/API_DOCUMENTATION.md)
 
 ## Prerequisite
 
@@ -21,53 +21,53 @@ yum install go git tar libpam
 
 ## How to Install in Windows
 ```
-go get -d github.com/ibmdb/go_ibm_db
+go get -d github.com/jcnnrts/go_ibm_db
 
 If you already have a cli driver available in your system, add the path of the same to your Path windows environment variable
 Example: Path = C:\Program Files\IBM\IBM DATA SERVER DRIVER\bin
 
 
-If you do not have a clidriver in your system, go to installer folder where go_ibm_db is downloaded in your system (Example: C:\Users\uname\go\src\github.com\ibmdb\go_ibm_db\installer) and run setup.go file (go run setup.go).
+If you do not have a clidriver in your system, go to installer folder where go_ibm_db is downloaded in your system (Example: C:\Users\uname\go\src\github.com\jcnnrts\go_ibm_db\installer) and run setup.go file (go run setup.go).
 
 where uname is the username
 
 Above command will download clidriver.
 
 Add the path of the clidriver downloaded to your Path windows environment variable
-(Example: Path=C:\Users\rakhil\go\src\github.com\ibmdb\go_ibm_db\installer\clidriver\bin)
+(Example: Path=C:\Users\rakhil\go\src\github.com\jcnnrts\go_ibm_db\installer\clidriver\bin)
 
 
 ```
 
 ## How to Install in Linux/Mac
 ```
-go get -d github.com/ibmdb/go_ibm_db
+go get -d github.com/jcnnrts/go_ibm_db
 
 If you already have a cli driver available in your system, set the below environment variables with the clidriver path
 
 export DB2HOME=/home/rakhil/dsdriver
 export CGO_CFLAGS=-I$DB2HOME/include
-export CGO_LDFLAGS=-L$DB2HOME/lib 
+export CGO_LDFLAGS=-L$DB2HOME/lib
 Linux:
 export LD_LIBRARY_PATH=/home/rakhil/dsdriver/lib
 Mac:
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/Applications/dsdriver/lib
 
 If you do not have a clidriver available in your system
-go to installer folder where go_ibm_db is downloaded in your system (Example: /home/uname/go/src/github.com/ibmdb/go_ibm_db/installer) and run setup.go file (go run setup.go)
+go to installer folder where go_ibm_db is downloaded in your system (Example: /home/uname/go/src/github.com/jcnnrts/go_ibm_db/installer) and run setup.go file (go run setup.go)
 where uname is the username
 
 Above command will download clidriver.
 
 Set the below envronment variables with the path of the clidriver downloaded
 
-export DB2HOME=/home/uname/go/src/github.com/ibmdb/go_ibm_db/installer/clidriver
+export DB2HOME=/home/uname/go/src/github.com/jcnnrts/go_ibm_db/installer/clidriver
 export CGO_CFLAGS=-I$DB2HOME/include
 export CGO_LDFLAGS=-L$DB2HOME/lib
 Linux:
-export LD_LIBRARY_PATH=/home/uname/go/src/github.com/ibmdb/go_ibm_db/installer/clidriver/lib
+export LD_LIBRARY_PATH=/home/uname/go/src/github.com/jcnnrts/go_ibm_db/installer/clidriver/lib
 Mac:
-export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/home/uname/go/src/github.com/ibmdb/go_ibm_db/installer/clidriver/lib
+export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:/home/uname/go/src/github.com/jcnnrts/go_ibm_db/installer/clidriver/lib
 
 
 ```
@@ -92,7 +92,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/ibmdb/go_ibm_db"
+	_ "github.com/jcnnrts/go_ibm_db"
 )
 
 func main() {
@@ -116,7 +116,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/ibmdb/go_ibm_db"
+	_ "github.com/jcnnrts/go_ibm_db"
 )
 
 func Create_Con(con string) *sql.DB {
@@ -221,7 +221,7 @@ package main
 import (
 	_ "database/sql"
 	"fmt"
-	a "github.com/ibmdb/go_ibm_db"
+	a "github.com/jcnnrts/go_ibm_db"
 )
 
 func main() {
@@ -257,6 +257,6 @@ For Running the Tests:
 
 1) Put your connection string in the main.go file in testdata folder
 
-2) Now run go test command (use go test -v command for details) 
+2) Now run go test command (use go test -v command for details)
 
 

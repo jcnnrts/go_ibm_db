@@ -11,7 +11,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/ibmdb/go_ibm_db/api"
+	"github.com/jcnnrts/go_ibm_db/api"
 )
 
 type Parameter struct {

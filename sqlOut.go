@@ -11,7 +11,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/ibmdb/go_ibm_db/api"
+	"github.com/jcnnrts/go_ibm_db/api"
 )
 
 // Out struct is used to store the value of a OUT parameter in Stored Procedure

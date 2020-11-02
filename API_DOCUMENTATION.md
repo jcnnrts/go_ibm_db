@@ -234,7 +234,7 @@ func oper() error {
 
 QueryRow executes a query that is expected to return at most one row.
 If there are more rows then it will scan first and discards the rest.
- 
+
 ```go
 func oper() error {
 	id := 123
@@ -368,7 +368,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/ibmdb/go_ibm_db"
+	"github.com/jcnnrts/go_ibm_db"
 )
 
 func main() {
@@ -405,7 +405,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/ibmdb/go_ibm_db"
+	"github.com/jcnnrts/go_ibm_db"
 )
 
 func main() {

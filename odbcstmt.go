@@ -12,7 +12,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/ibmdb/go_ibm_db/api"
+	"github.com/jcnnrts/go_ibm_db/api"
 )
 
 // TODO(brainman): see if I could use SQLExecDirect anywhere
