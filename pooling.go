@@ -1,7 +1,6 @@
 package go_ibm_db
 
 import (
-	"Time"
 	"database/sql"
 	"fmt"
 	"strconv"
@@ -20,20 +19,20 @@ type DBP struct {
 
 //Pool struct contais the about the pool like size, used and available connections
 type Pool struct {
-	availablePool	map[string][]*DBP
-	usedPool		map[string][]*DBP
-	maxPoolSize		int
-	curPoolSize		int
-	mu				sync.Mutex
+	availablePool map[string][]*DBP
+	usedPool      map[string][]*DBP
+	maxPoolSize   int
+	curPoolSize   int
+	mu            sync.Mutex
 }
 
 //Pconnect will return the pool instance
 func Pconnect(poolSize int) *Pool {
 	p := &Pool{
-		availablePool:	make(map[string][]*DBP),
-		usedPool:		make(map[string][]*DBP),
-		maxPoolSize:	poolSize,
-		curPoolSize:	0
+		availablePool: make(map[string][]*DBP),
+		usedPool:      make(map[string][]*DBP),
+		maxPoolSize:   poolSize,
+		curPoolSize:   0,
 	}
 
 	return p
@@ -45,7 +44,8 @@ func (p *Pool) Open(Connstr string, options ...string) *DBP {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 
-	var time time.Duration
+	var Time time.Duration
+	var ConnMaxLifeTime int
 
 	//Check if there are options
 	if len(options) > 0 {
@@ -53,13 +53,14 @@ func (p *Pool) Open(Connstr string, options ...string) *DBP {
 		for i := 0; i < len(options); i++ {
 			opt := strings.Split(options[i], "=")
 			if opt[0] == "SetConnMaxLifetime" {
-				time = Time.Duration(strconv.Atoi(opt[1])) * time.Second
+				ConnMaxLifeTime, _ = strconv.Atoi(opt[1])
+				Time = time.Duration(ConnMaxLifeTime) * time.Second
 			} else {
 				fmt.Println("not a valid parameter")
 			}
 		}
 	} else {
-		time = 30 * Time.Second
+		Time = 30 * time.Second
 	}
 
 	if p.curPoolSize < p.maxPoolSize {
@@ -73,13 +74,13 @@ func (p *Pool) Open(Connstr string, options ...string) *DBP {
 				val = val[:len(val)-1]
 				p.availablePool[Connstr] = val
 				p.usedPool[Connstr] = append(p.usedPool[Connstr], dbpo)
-				dbpo.SetConnMaxLifetime(time)
+				dbpo.SetConnMaxLifetime(Time)
 				return dbpo
 			} else {
 				dbpo := val[0]
 				p.usedPool[Connstr] = append(p.usedPool[Connstr], dbpo)
 				delete(p.availablePool, Connstr)
-				dbpo.SetConnMaxLifetime(time)
+				dbpo.SetConnMaxLifetime(Time)
 				return dbpo
 			}
 		} else {
@@ -96,7 +97,7 @@ func (p *Pool) Open(Connstr string, options ...string) *DBP {
 			}
 
 			p.usedPool[Connstr] = append(p.usedPool[Connstr], dbi)
-			dbi.SetConnMaxLifetime(time)
+			dbi.SetConnMaxLifetime(Time)
 
 			return dbi
 		}
@@ -211,5 +212,6 @@ func (p *Pool) Release() {
 func (p *Pool) Display() {
 	fmt.Println(p.availablePool)
 	fmt.Println(p.usedPool)
-	fmt.Println(p.poolSize)
+	fmt.Println(p.maxPoolSize)
+	fmt.Println(p.curPoolSize)
 }
